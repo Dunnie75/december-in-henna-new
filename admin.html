@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin | December in Henna</title>
+<style>
+:root{--plum:#1d0620;--plum2:#4a0a4f;--mag:#c2007a;--pink:#ff2d95;--gold:#ffc83d;--gold2:#fff0a8;--gold3:#b8862b;--cream:#fff7e6;--glass:rgba(255,255,255,.08);--line:rgba(255,255,255,.16);--ok:#38d996;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Jost,"Segoe UI",system-ui,sans-serif;color:var(--cream);background:radial-gradient(circle at 50% 0,var(--plum2),var(--plum) 70%);background-color:var(--plum);min-height:100vh;line-height:1.5}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;margin:0;font-weight:700}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 40px}
+.note{font-size:12px;text-align:center;background:var(--gold);color:#2e0f06;padding:6px;font-weight:600}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}
+.gate{max-width:380px;margin:60px auto}
+.gate h1{font-size:38px;text-align:center}
+input,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.3);color:var(--cream);font:16px Jost,sans-serif;margin:6px 0}
+label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#e8c9dc}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;font:700 13px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:11px 18px;border-radius:999px;color:#fff;background:linear-gradient(180deg,#ff7cc4,var(--pink) 55%,var(--mag))}
+.btn.gold{color:#2e0f06;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3))}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--cream)}
+.btn.sm{padding:7px 12px;font-size:11px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.top h1{font-size:30px}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+.tab{white-space:nowrap;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--cream);cursor:pointer;font:600 13px Jost,sans-serif}
+.tab.on{background:var(--pink);border-color:var(--pink)}
+.tab.soon{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.pill{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+.pill.on{background:var(--ok);color:#06281a;border-color:var(--ok)}
+.pill.wait{background:var(--gold);color:#2e0f06;border-color:var(--gold)}
+.tk h3{font-size:26px}
+.sw{position:relative;width:54px;height:30px;border-radius:999px;background:#555;border:0;cursor:pointer;transition:.2s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:var(--ok)}.sw.on::after{left:27px}
+.who{font-size:20px;margin:8px 0}
+.list{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:6px}
+.list button{display:flex;justify-content:space-between;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);color:var(--cream);padding:11px 12px;font:15px Jost,sans-serif;cursor:pointer}
+.list button:hover{background:var(--glass)}
+.list small{color:#e8c9dc}
+.chip{display:inline-flex;gap:8px;align-items:center;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:6px 8px 6px 14px;margin:4px 4px 0 0}
+.chip button{background:none;border:0;color:var(--pink);cursor:pointer;font-size:18px;line-height:1}
+.bar{height:10px;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--gold));transition:.3s}
+.g2{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.msg{font-size:13px;color:var(--gold);min-height:18px;margin-top:6px}
+.next{font-size:13px;color:#e8c9dc}
+textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.3);color:var(--cream);font:16px Jost,sans-serif;margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script>window.addEventListener("error",function(e){var d=document.createElement("div");d.style.cssText="position:fixed;top:0;left:0;right:0;z-index:99;background:#b00020;color:#fff;padding:10px;font:14px sans-serif";d.textContent="Error: "+e.message;document.body.appendChild(d)});if(/PASTE/.test(CFG.url||"")){addEventListener("load",function(){var d=document.createElement("div");d.style.cssText="position:fixed;top:0;left:0;right:0;z-index:99;background:#b00020;color:#fff;padding:10px;font:14px sans-serif";d.textContent="config.js still has the PASTE placeholders. Put in your Supabase URL and key.";document.body.appendChild(d)})}</script>
+<script>
+var sb=supabase.createClient(CFG.url,CFG.key),$=function(i){return document.getElementById(i)},A=function(){return $("app")};
+var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var n=function(x){return "₦"+Number(x).toLocaleString("en-NG")};
+var ST={},SV=[],G=[],RS=[],BK=[],NC=0,TAB="ov",PK=null,cf=null,CUSL=[],AQ="",msg="";
+var TABS=[["ov","Overview"],["svc","Services"],["gold","Golden Tickets"],["early","Early Bird"],["ret","Returning"],["appt","Appointments"],["set","Settings"]];
+function gate(m){A().innerHTML='<div class="gate card"><h1>Admin sign in</h1><label>Email</label><input id="u" type="email" autocomplete="username"><label>Password</label><input id="p" type="password" autocomplete="current-password"><div class="msg">'+(m||"")+'</div><button class="btn gold" style="width:100%;margin-top:12px" onclick="login()">Sign in</button></div>'}
+async function login(){var r=await sb.auth.signInWithPassword({email:$("u").value.trim(),password:$("p").value});if(r.error){gate("Wrong email or password.");return}start()}
+async function start(){var s=await sb.auth.getSession();if(!s.data.session){gate();return}var a=await sb.from("admins").select("user_id").eq("user_id",s.data.session.user.id);if(!a.data||!a.data.length){await sb.auth.signOut();gate("This account is not an admin.");return}await load();draw()}
+async function load(){var q=await Promise.all([sb.from("settings").select("*").eq("id",1).single(),sb.from("services").select("*").order("sort"),sb.from("golden_tickets").select("*,customers(full_name)").order("slot"),sb.from("returning_selected").select("customer_id,customers(full_name)"),sb.from("bookings").select("*").order("created_at",{ascending:false}),sb.from("customers").select("id",{count:"exact",head:true})]);
+ ST=q[0].data||{};SV=q[1].data||[];G=q[2].data||[];RS=q[3].data||[];BK=q[4].data||[];NC=q[5].count||0}
+function draw(){var b={ov:ov,svc:svc,gold:gold,early:early,ret:ret,appt:appt,set:sett}[TAB]();
+ A().innerHTML='<div class="top"><h1>December in Henna · Admin</h1><button class="btn ghost sm" onclick="sb.auth.signOut().then(function(){gate()})">Sign out</button></div><div class="tabs">'+TABS.map(function(t){return '<button class="tab '+(TAB===t[0]?"on":"")+'" onclick="TAB=\''+t[0]+'\';PK=null;cf=null;msg=\'\';draw()">'+t[1]+"</button>"}).join("")+"</div>"+b+'<div class="msg">'+msg+"</div>"}
+function f(l,id,v,t){return "<label>"+l+'</label><input id="'+id+'" type="'+(t||"text")+'" value="'+esc(v)+'">'}
+function det(c){return '<div style="line-height:1.7;margin:6px 0"><b style="font-size:19px">'+esc(c.full_name)+"</b></div>"}
+function loc(t){return t?new Date(new Date(t)-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,16):""}
+async function sset(o){var r=await sb.from("settings").update(o).eq("id",1);msg=r.error?r.error.message:"Saved.";await load();draw()}
+function sw(on,fn){return '<button class="sw '+(on?"on":"")+'" onclick="'+fn+'"></button>'}
+function ov(){var act=(ST.early_on?1:0)+(ST.returning_on?1:0)+(G.some(function(g){return g.active})?1:0);
+ return '<div class="g2">'+[["Customers",NC],["Bookings",BK.length],["Confirmed",BK.filter(function(b){return b.status==="confirmed"}).length],["Completed",BK.filter(function(b){return b.status==="completed"}).length],["Active campaigns",act]].map(function(x){return '<div class="card"><label>'+x[0]+'</label><h3 style="font-size:34px">'+x[1]+"</h3></div>"}).join("")+"</div>"}
+function sf(s){var i=s.id||"new";return '<div class="card">'+f("Name","n"+i,s.name)+f("Description","d"+i,s.description)+'<div class="g2">'+f("Original price","o"+i,s.original_price,"number")+f("Early Bird price","e"+i,s.early_price,"number")+'</div><label><input type="checkbox" id="a'+i+'" '+(s.active!==false?"checked":"")+' style="width:auto"> Active</label> <label><input type="checkbox" id="g'+i+'" '+(s.golden_ok!==false?"checked":"")+' style="width:auto"> Golden Ticket eligible</label><label>Photo</label><input type="file" accept="image/*" id="f'+i+'"><div class="row" style="margin-top:8px"><button class="btn sm" onclick="ssv(\''+i+'\')">Save</button>'+(s.id?'<button class="btn ghost sm" onclick="sdel('+s.id+')">Delete</button>':"")+"</div></div>"}
+function svc(){return '<h3 style="margin:6px 0">Add a service</h3>'+sf({})+SV.map(sf).join("")}
+async function ssv(i){var o={name:$("n"+i).value,description:$("d"+i).value,original_price:+$("o"+i).value,early_price:+$("e"+i).value,active:$("a"+i).checked,golden_ok:$("g"+i).checked},fl=$("f"+i).files[0];
+ if(fl){var p=Date.now()+"-"+fl.name.replace(/[^\w.]/g,"_"),u=await sb.storage.from("photos").upload(p,fl);if(u.error){msg=u.error.message;draw();return}o.photo=sb.storage.from("photos").getPublicUrl(p).data.publicUrl}
+ var r=i==="new"?await sb.from("services").insert(o):await sb.from("services").update(o).eq("id",i);msg=r.error?r.error.message:"Saved.";await load();draw()}
+async function sdel(id){if(!confirm("Delete this service?"))return;await sb.from("services").delete().eq("id",id);await load();draw()}
+var NQ="";
+async function find(q){q=q.replace(/[,()%*]/g,"").trim();NQ=q;var r=await sb.from("customers").select("*").ilike("full_name","%"+q+"%").limit(8);CUSL=r.data||[];
+ $("lst").innerHTML=CUSL.map(function(c){return '<button onclick="ask(\''+c.id+'\')"><span>'+esc(c.full_name)+"</span></button>"}).join("")+(q.length>1?'<button onclick="addname()"><span>+ Add “'+esc(q)+'” as a new customer</span></button>':"")||'<div style="padding:12px">Type a name</div>'}
+async function addname(){var r=await sb.from("customers").insert({full_name:NQ}).select().single();if(r.error){msg=r.error.message.indexOf("duplicate")>-1?"That name already exists. Search for it.":r.error.message;draw();return}CUSL=[r.data];ask(r.data.id)}
+function ask(id){cf={k:TAB==="gold"?"t":"r",c:CUSL.find(function(x){return x.id===id})};draw()}
+function cfH(){return cf?'<div class="card" style="border-color:var(--gold)"><h3>Confirm this customer</h3>'+det(cf.c)+'<div class="row" style="margin-top:10px;justify-content:flex-start"><button class="btn gold sm" onclick="ok()">Confirm</button><button class="btn ghost sm" onclick="cf=null;draw()">Back</button></div></div>':""}
+async function ok(){var c=cf.c,r;if(cf.k==="t")r=await sb.from("golden_tickets").update({customer_id:c.id,active:false}).eq("slot",PK);else r=await sb.from("returning_selected").insert({customer_id:c.id});
+ msg=r.error?r.error.message:c.full_name+" saved.";cf=null;PK=null;await load();draw()}
+function gold(){return cfH()+G.map(function(g){var st=g.redeemed?"Redeemed":g.active?"Active":g.customer_id?"Assigned, off":"Unassigned";
+ return '<div class="card"><div class="row"><h3>Golden Ticket '+g.slot+' · 50% off</h3><span class="pill '+(g.active||g.redeemed?"on":"")+'">'+st+"</span></div>"+(g.customers?det(g.customers):"<p>No customer selected</p>")+
+ (PK===g.slot?'<input id="q" placeholder="Search a customer name" oninput="find(this.value)"><div class="list" id="lst"></div>':'<button class="btn sm" '+(g.redeemed?"disabled":"")+' onclick="PK='+g.slot+';cf=null;draw()">'+(g.customer_id?"Reassign":"Choose customer")+"</button>")+
+ '<div class="row" style="margin-top:12px"><span>Ticket active</span>'+sw(g.active,"gtog("+g.slot+")")+"</div></div>"}).join("")}
+async function gtog(s){var g=G.find(function(x){return x.slot===s});if(!g.customer_id){msg="Choose a customer first.";draw();return}if(g.redeemed)return;var r=await sb.from("golden_tickets").update({active:!g.active}).eq("slot",s);msg=r.error?r.error.message:"Saved.";await load();draw()}
+function brow(b){return '<div class="card"><b>'+esc(b.customer_name)+"</b> · "+esc(b.ref)+"<br>"+esc(b.service_name)+" · "+b.privilege+" · "+n(b.amount)+"<br>"+(b.appt_date?b.appt_date+" "+String(b.appt_time).slice(0,5):"No appointment yet")+"</div>"}
+function early(){return '<div class="card"><div class="row"><h3>Early Bird is '+(ST.early_on?"ON":"OFF")+"</h3>"+sw(ST.early_on,"sset({early_on:"+!ST.early_on+"})")+'</div><div class="g2">'+f("Opens","eo",ST.early_open,"date")+f("Closes","ec",ST.early_close,"date")+'</div><button class="btn sm" style="margin-top:8px" onclick="sset({early_open:$(\'eo\').value,early_close:$(\'ec\').value})">Save dates</button></div><p class="next">Prices are edited under Services.</p><h3 style="margin:8px 0">Early Bird bookings</h3>'+(BK.filter(function(b){return b.privilege==="early"}).map(brow).join("")||'<p class="next">None yet.</p>')}
+function ret(){return cfH()+'<div class="card"><div class="row"><h3>Privilege is '+(ST.returning_on?"UNLOCKED":"LOCKED")+"</h3>"+sw(ST.returning_on,"sset({returning_on:"+!ST.returning_on+"})")+'</div><div class="g2">'+f("Activation date","rf",ST.returning_from,"date")+f("Closing date","rt",ST.returning_to,"date")+"</div>"+f("Allocation limit","rl",ST.returning_limit,"number")+'<button class="btn sm" style="margin-top:8px" onclick="sset({returning_from:$(\'rf\').value,returning_to:$(\'rt\').value,returning_limit:+$(\'rl\').value})">Save dates and limit</button></div><div class="card"><div class="row"><h3>Selected customers</h3><b>'+RS.length+" of "+ST.returning_limit+" used · "+(ST.returning_limit-RS.length)+" left</b></div>"+RS.map(function(r){return '<span class="chip">'+esc(r.customers.full_name)+'<button onclick="rdel(\''+r.customer_id+'\')">×</button></span>'}).join("")+'<input id="q" style="margin-top:12px" placeholder="Search a customer name" oninput="find(this.value)"><div class="list" id="lst"></div></div>'}
+async function rdel(id){await sb.from("returning_selected").delete().eq("customer_id",id);await load();draw()}
+function alist(){var q=AQ.toLowerCase(),l=BK.filter(function(b){return (b.ref+" "+(b.customer_name||"")).toLowerCase().indexOf(q)>-1});
+ var up=l.filter(function(b){return b.status==="confirmed"&&b.appt_date}).sort(function(a,b){return (a.appt_date+a.appt_time)>(b.appt_date+b.appt_time)?1:-1});
+ return '<h3 style="margin:12px 0 4px">Upcoming</h3>'+(up.map(brow).join("")||'<p class="next">None yet.</p>')+'<h3 style="margin:12px 0 4px">All bookings</h3>'+(l.map(function(b){return '<div class="card"><b>'+esc(b.customer_name)+"</b> · "+esc(b.ref)+"<br>"+esc(b.service_name)+" · "+b.privilege+" · "+n(b.amount)+" · "+(b.status||"no appointment yet")+'<div class="g2"><input type="date" id="ad'+b.id+'" value="'+(b.appt_date||"")+'"><input type="time" id="aa'+b.id+'" value="'+String(b.appt_time||"").slice(0,5)+'"></div><div class="row" style="margin-top:6px;justify-content:flex-start"><button class="btn sm" onclick="asave('+b.id+')">Save details</button><button class="btn gold sm" onclick="adone('+b.id+')">Mark completed</button></div></div>'}).join("")||'<p class="next">No bookings found.</p>')}
+function appt(){return '<input placeholder="Search customer name or booking reference" value="'+esc(AQ)+'" oninput="AQ=this.value;$(\'al\').innerHTML=alist()"><div id="al">'+alist()+"</div>"}
+async function asave(id){var r=await sb.from("bookings").update({appt_date:$("ad"+id).value||null,appt_time:$("aa"+id).value||null}).eq("id",id);msg=r.error?r.error.message:"Saved.";await load();draw()}
+async function adone(id){var r=await sb.from("bookings").update({status:"completed"}).eq("id",id);msg=r.error?r.error.message:"Marked completed.";await load();draw()}
+function sett(){return [["Business name","bn","business_name"],["WhatsApp number (with country code)","wn","whatsapp"],["Bank name","bk","bank_name"],["Account name","an","account_name"],["Account number","ac","account_number"]].map(function(x){return f(x[0],x[1],ST[x[2]])}).join("")+'<label>Payment instructions</label><textarea id="pi" rows="3">'+esc(ST.instructions)+'</textarea><label>Booking policies (one per line)</label><textarea id="po" rows="8">'+esc(ST.policies)+'</textarea><label>Logo</label><input type="file" accept="image/*" id="lo"><button class="btn gold" style="margin-top:10px" onclick="ssave()">Save settings</button>'}
+async function ssave(){var o={business_name:$("bn").value,whatsapp:$("wn").value,bank_name:$("bk").value,account_name:$("an").value,account_number:$("ac").value,instructions:$("pi").value,policies:$("po").value},fl=$("lo").files[0];
+ if(fl){var p="logo-"+Date.now()+"-"+fl.name.replace(/[^\w.]/g,"_"),u=await sb.storage.from("photos").upload(p,fl);if(u.error){msg=u.error.message;draw();return}o.logo_url=sb.storage.from("photos").getPublicUrl(p).data.publicUrl}
+ sset(o)}
+start();
+gate();start().catch(function(e){gate("Could not start: "+e.message)});
+</script>
+</body>
+</html>
